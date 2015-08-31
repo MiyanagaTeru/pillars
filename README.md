@@ -12,4 +12,6 @@ Run `grunt` for building and `grunt serve` for preview.
 Running `grunt test` will run the unit tests with karma.
 
 
-#functions: use a lanCtrl to change language of the page
+##features
+
+language switcher controller pass language to translate service and broadcast to pageContent controller to update the page
