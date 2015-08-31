@@ -9,69 +9,30 @@
  */
 
 angular.module('pillarsApp')
-  .service('translate', function () {
-  	 // dummyData for testing
-	var dummyData = {
-	  en: {
-	      'pillars': [
-	        {
-	          'title': 'Health',
-	          'content': 'Health content is here.',
-	          'url': '/health'
-	        },
-	        {
-	          'title': 'Wealth',
-	          'content': 'Wealth content is here.',
-	          'url': '/wealth'
-	        },
-	        {
-	          'title': 'Life',
-	          'content': 'Life content is here.',
-	          'url': '/life'
-	        },
-	        {
-	          'title': 'Work',
-	          'content': 'Work content is here.',
-	          'url': '/work'
-	        }
-	      ]
-	    },
-	  es: {
-	      'pillars': [
-	        {
-	          'title': 'Salud',
-	          'content': 'el contenido de la Salud está aquí.',
-	          'url': '/health'
-	        },
-	        {
-	          'title': 'La riqueza',
-	          'content': 'La riqueza de contenido está aquí.',
-	          'url': '/wealth'
-	        },
-	        {
-	          'title': 'La vida',
-	          'content': 'La vida es el contenido aquí.',
-	          'url': '/life'
-	        },
-	        {
-	          'title': 'Trabajo',
-	          'content': 'Contenido del trabajo está aquí.',
-	          'url': '/work'
-	        }
-	      ]
-	    }
-	};
-
+  .service('translate', function ($rootScope) {
     // AngularJS will instantiate a singleton by calling "new" on this function
 	var pageContent = {};
-	var translatedContent = function(lan){
+	var translateContent = function(lan){
 		lan = lan || 'en';
-		pageContent = dummyData[lan];
-		return pageContent;	
+		//here the translateContent function will call API to update $rootScope.PageContent
+		pageContent = $rootScope.dummyData[lan];
+		// console.log('Language is '+ lan);
+		// console.log('in translate service: ' + pageContent.pillars[0].title);
+		$rootScope.$broadcast('Translate process is done', {} );
 	};
 
+	//init pageContent
+	translateContent();
+	var getContent = function(){
+		return pageContent;
+	};
+	// $rootScope.$on('Language Changed', function(event, message){
+	// 	$scope.translateContent(message.lan);
+	// 	$rootScope.$broadcast('Translate process is done', {} );
+	// });
 	return {
-		translatedContent: translatedContent
-	};    
+		getContent: getContent,
+		translateContent: translateContent
+	};
   });
 

@@ -8,10 +8,16 @@
  * Controller of the pillarsApp
  */
 angular.module('pillarsApp')
-  .controller('LanCtrl', function ($rootScope, $scope) {
+  .controller('LanCtrl', function ($scope, translate) {
 	$scope.lan = 'en';
-	$scope.updateLan = function(lanOption){
-		$scope.lan = lanOption;		
-		$rootScope.$broadcast('Language Changed', { lan: $scope.lan });
+	var updateLan = function(lanOption){
+		// if ($scope.lan !== lanOption)
+		// {
+		// 	$scope.lan = lanOption;		
+			translate.translateContent(lanOption);
+		// }
 	};
+	$scope.$watch('lan', function(){
+		updateLan($scope.lan);
+	});
   });
